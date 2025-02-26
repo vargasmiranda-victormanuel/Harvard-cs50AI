@@ -1,0 +1,10 @@
+-Use the below commands in Windows terminal
+
+-Execute the program
+python .\Lectures\00-Search\maze.py      .\Lectures\00-Search\maze1.txt
+
+-install pillow
+install pillow
+
+-list libraries installed
+pip list
