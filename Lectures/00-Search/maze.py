@@ -53,6 +53,7 @@ class Maze():
         if contents.count("B") != 1:
             raise Exception("maze must have exactly one goal")
 
+
         # Determine height and width of maze
         contents = contents.splitlines()
         self.height = len(contents)
@@ -75,8 +76,10 @@ class Maze():
                     else:
                         row.append(True)
                 except IndexError:
-                    row.append(False)
+                    row.append(False)  
             self.walls.append(row)
+
+        print(self.walls)
 
         self.solution = None
 
