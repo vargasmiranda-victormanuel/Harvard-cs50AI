@@ -1,7 +1,7 @@
 -Use the below commands in Windows terminal
 
 -Execute the program
-python .\Lectures\00-Search\maze.py      .\Lectures\00-Search\maze1.txt
+python .\Lectures\00-Search\maze-vic.py      .\Lectures\00-Search\maze4.txt
 
 -install pillow
 install pillow
