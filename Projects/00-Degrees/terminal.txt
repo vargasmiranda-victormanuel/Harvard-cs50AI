@@ -1,0 +1,5 @@
+python .\Projects\00-Degrees\degrees.py  .\Projects\00-Degrees\large
+
+Gary Cooper
+
+Gwen Haworth
