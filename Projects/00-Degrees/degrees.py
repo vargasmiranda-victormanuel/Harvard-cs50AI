@@ -132,6 +132,7 @@ def shortest_path(source, target):
                     print("solution found in loop: ", num_explored)
                     return is_solved(child)
 
+
 def is_solved(node):
     solution = []
     while node.parent is not None:
@@ -140,6 +141,7 @@ def is_solved(node):
         node = node.parent
     solution.reverse()
     return solution
+
 
 def person_id_for_name(name):
     """
