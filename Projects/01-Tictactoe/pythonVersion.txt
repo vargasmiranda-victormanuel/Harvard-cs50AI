@@ -1,0 +1,2 @@
+lastest version should be 3.12
+video to understand deep copy: https://www.youtube.com/watch?v=naG4uXpmVAU

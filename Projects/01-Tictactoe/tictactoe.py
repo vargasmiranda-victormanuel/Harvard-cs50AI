@@ -38,14 +38,25 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    raise NotImplementedError
+    actions = []
+    for i in range(len(board)):
+        for j in range(max(len(a) for a in board)):
+            if board[i][j] == EMPTY:
+                possibleAction = (i,j)
+                actions.append(possibleAction)
+    return(actions)
 
 
 def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
-    raise NotImplementedError
+    if action in actions(board):
+        new_board = copy.deepcopy(board)
+        new_board[action[0]][action[1]] = player(new_board)
+        return new_board
+    else:
+        raise Exception("accion invalida")
 
 
 def winner(board):
@@ -62,12 +73,18 @@ def winner(board):
     transposedBoard = list(map(list,(zip(*board))))
     diagonalBoard = [[board[0][0],board[1][1],board[2][2]],[board[0][2],board[1][1],board[2][0]]]
     joinnedBoard = board + transposedBoard + diagonalBoard
-    return(next(iter(checkWinner(joinnedBoard))))
+    winner = checkWinner(joinnedBoard)
+    if winner == None:
+        return winner
+    else:
+        return(next(iter(winner)))
 
 def checkWinner(board):
     for row in board:
         if len(set(row)) == 1 and set(row) != {None}:
             return(set(row))
+        else:
+            return None
 
 def terminal(board):
     """
@@ -76,7 +93,7 @@ def terminal(board):
     transposedBoard = list(map(list,(zip(*board))))
     diagonalBoard = [[board[0][0],board[1][1],board[2][2]],[board[0][2],board[1][1],board[2][0]]]
     joinnedBoard = board + transposedBoard + diagonalBoard
-    
+
     someoneWone = checkTerminal(joinnedBoard)
 
     if someoneWone:
@@ -98,7 +115,13 @@ def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    raise NotImplementedError
+    win = winner(board)
+    if win == X:
+        return 1
+    elif win == O:
+        return -1
+    else:
+        raise Exception("Utility should be called only if there is a terminal board")
 
 
 def minimax(board):

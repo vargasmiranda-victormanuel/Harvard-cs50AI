@@ -1,41 +1,79 @@
 import math
+import copy
 
 X = "X"
 O = "O"
 EMPTY = None
 
 
-board = [[X, O, X],
-        [O, O, X],
+board = [[EMPTY, O, X],
+        [EMPTY, O, X],
         [X, X, O]]
+
+action = (0,0)
 
 #board = [[EMPTY, EMPTY, EMPTY],
 #        [EMPTY, EMPTY, EMPTY],
 #        [EMPTY, EMPTY, EMPTY]]
 
-def terminal(board):
+def result(board, action):
     """
-    Returns True if game is over, False otherwise.
+    Returns the board that results from making move (i, j) on the board.
     """
-    transposedBoard = list(map(list,(zip(*board))))
-    diagonalBoard = [[board[0][0],board[1][1],board[2][2]],[board[0][2],board[1][1],board[2][0]]]
-    joinnedBoard = board + transposedBoard + diagonalBoard
-    someoneWone = checkTerminal(joinnedBoard)
+    board[action[0]][action[1]] = player(board)
+    return board
 
-    if someoneWone:
-        return someoneWone
+def player(board):
+    """
+    Returns player who has the next turn on a board.
+    """
+    count = 0
+    for i in range(len(board)):
+        for j in range(max(len(a) for a in board)):
+            if board[i][j] == X:
+                count+=1
+            elif board[i][j] == O:
+                count-=1
+    if count:
+        return O
+    return X
+
+def actions(board):
+    """
+    Returns set of all possible actions (i, j) available on the board.
+    """
+    actions = []
+    for i in range(len(board)):
+        for j in range(max(len(a) for a in board)):
+            if board[i][j] == EMPTY:
+                possibleAction = (i,j)
+                actions.append(possibleAction)
+    return(actions)
+
+
+def result(board, action):
+    """
+    Returns the board that results from making move (i, j) on the board.
+    """
+    if action in actions(board):
+        new_board = copy.deepcopy(board)
+        new_board[action[0]][action[1]] = player(new_board)
+        return new_board
     else:
-        for i in range(len(board)):
-            for j in range(max(len(a) for a in board)):
-                if board[i][j] == EMPTY:
-                    return False
-        return(True)
-
-def checkTerminal(board):
-    for row in board:
-        if len(set(row)) == 1 and set(row) != {None}:
-            return(True)
-    return False
+        raise Exception("accion invalida")
+    #missing deep copy instructions
 
 
-print(terminal(board))
+board = [[EMPTY, O, X],
+        [EMPTY, O, X],
+        [X, X, O]]
+
+print(action)
+print(result(board,action))
+print(board)
+
+action = (1,0)
+
+print(action)
+print(result(board,action))
+print(board)
