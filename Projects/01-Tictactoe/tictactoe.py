@@ -27,9 +27,9 @@ def player(board):
     for i in range(len(board)):
         for j in range(max(len(a) for a in board)):
             if board[i][j] == X:
-                count+=1
+                count += 1
             elif board[i][j] == O:
-                count-=1
+                count -= 1
     if count:
         return O
     return X
@@ -39,12 +39,12 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    actions = []
+    actions = set()
     for i in range(len(board)):
         for j in range(max(len(a) for a in board)):
             if board[i][j] == EMPTY:
-                possibleAction = (i,j)
-                actions.append(possibleAction)
+                possibleAction = (i, j)
+                actions.add(possibleAction)
     return(actions)
 
 
@@ -71,20 +71,21 @@ def winner(board):
     O = "O"
     EMPTY = None
     """
-    transposedBoard = list(map(list,(zip(*board))))
-    diagonalBoard = [[board[0][0],board[1][1],board[2][2]],[board[0][2],board[1][1],board[2][0]]]
+    transposedBoard = list(map(list, (zip(*board))))
+    diagonalBoard = [[board[0][0], board[1][1], board[2][2]],
+                     [board[0][2], board[1][1], board[2][0]]]
     joinnedBoard = board + transposedBoard + diagonalBoard
     winner = checkWinner(joinnedBoard)
     if winner == None:
         return winner
     else:
-        return(next(iter(winner)))
+        return (next(iter(winner)))
 
 
 def checkWinner(board):
     for row in board:
         if len(set(row)) == 1 and set(row) != {None}:
-            return(set(row))
+            return (set(row))
     return None
 
 
@@ -92,8 +93,9 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    transposedBoard = list(map(list,(zip(*board))))
-    diagonalBoard = [[board[0][0],board[1][1],board[2][2]],[board[0][2],board[1][1],board[2][0]]]
+    transposedBoard = list(map(list,( zip(*board))))
+    diagonalBoard = [[board[0][0], board[1][1], board[2][2]],
+                     [board[0][2], board[1][1], board[2][0]]]
     joinnedBoard = board + transposedBoard + diagonalBoard
 
     someoneWone = checkTerminal(joinnedBoard)
@@ -136,36 +138,36 @@ def minimax(board):
     Returns the optimal action for the current player on the board.
     """
     if player(board) == X:
-        return (maxValue(board,-100,100)[1])
+        return (maxValue(board, -100, 100)[1])
     elif player(board) == O:
-        return (minValue(board,-100,100)[1])
+        return (minValue(board, -100, 100)[1])
 
 
-def maxValue(board,alpha,beta):
+def maxValue(board, alpha, beta):
     if terminal(board):
-        return utility(board), ()
+        return (utility(board), utility(board))
     else:
         best = -100
         bestAction = ()
         for action in actions(board):
-            newValue = max(best,minValue(result(board,action),alpha,beta)[0])
+            newValue = max(best, minValue(result(board, action), alpha, beta)[0])
             if newValue > best:
                 bestAction = action
             best = max(best, newValue)
             alpha = max(alpha, best)
             if (beta <= alpha):
-                break 
+                break
         return best, bestAction
 
 
-def minValue(board,alpha,beta):
+def minValue(board, alpha, beta):
     if terminal(board):
-        return utility(board), ()
+        return (utility(board), utility(board))
     else:
         best = 100
         bestAction = ()
         for action in actions(board):
-            newValue = min(best,maxValue(result(board,action),alpha,beta)[0])
+            newValue = min(best,maxValue(result(board, action), alpha, beta)[0])
             if newValue < best:
                 bestAction = action
             best = min(best, newValue)
