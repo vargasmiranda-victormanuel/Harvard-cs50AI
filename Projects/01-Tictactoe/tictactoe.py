@@ -3,6 +3,7 @@ Tic Tac Toe Player
 """
 
 import math
+import copy
 
 X = "X"
 O = "O"
@@ -79,12 +80,13 @@ def winner(board):
     else:
         return(next(iter(winner)))
 
+
 def checkWinner(board):
     for row in board:
         if len(set(row)) == 1 and set(row) != {None}:
             return(set(row))
-        else:
-            return None
+    return None
+
 
 def terminal(board):
     """
@@ -103,23 +105,28 @@ def terminal(board):
             for j in range(max(len(a) for a in board)):
                 if board[i][j] == EMPTY:
                     return False
-        return(True)
+        return True
+
 
 def checkTerminal(board):
     for row in board:
         if len(set(row)) == 1 and set(row) != {None}:
-            return(True)
+            return True
     return False
+
 
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    win = winner(board)
-    if win == X:
-        return 1
-    elif win == O:
-        return -1
+    if terminal(board):
+        win = winner(board)
+        if win == X:
+            return 1
+        elif win == O:
+            return -1
+        elif win == None:
+            return 0
     else:
         raise Exception("Utility should be called only if there is a terminal board")
 
@@ -128,4 +135,35 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
+    if player(board) == X:
+        return (maxValue(board)[1])
+    elif player(board) == O:
+        return (minValue(board)[1])
+
+
+def maxValue(board):
+    if terminal(board):
+        return utility(board), ()
+    else:
+        value = -100
+        bestAction = ()
+        for action in actions(board):
+            newValue = max(value,minValue(result(board,action))[0])
+            if newValue > value:
+                bestAction = action
+            value = newValue
+        return value, bestAction
+
+
+def minValue(board):
+    if terminal(board):
+        return utility(board), ()
+    else:
+        value = 100
+        bestAction = ()
+        for action in actions(board):
+            newValue = min(value,maxValue(result(board,action))[0])
+            if newValue < value:
+                bestAction = action
+            value = newValue
+        return value, bestAction
