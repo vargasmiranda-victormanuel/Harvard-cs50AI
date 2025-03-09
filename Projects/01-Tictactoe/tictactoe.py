@@ -71,7 +71,7 @@ def winner(board):
     O = "O"
     EMPTY = None
     """
-    transposedBoard = list(map(list,( zip(*board))))
+    transposedBoard = list(map(list, (zip(*board))))
     diagonalBoard = [[board[0][0], board[1][1], board[2][2]],
                      [board[0][2], board[1][1], board[2][0]]]
     joinnedBoard = board + transposedBoard + diagonalBoard
@@ -93,7 +93,7 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    transposedBoard = list(map(list,( zip(*board))))
+    transposedBoard = list(map(list, (zip(*board))))
     diagonalBoard = [[board[0][0], board[1][1], board[2][2]],
                      [board[0][2], board[1][1], board[2][0]]]
     joinnedBoard = board + transposedBoard + diagonalBoard
