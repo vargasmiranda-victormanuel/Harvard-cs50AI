@@ -45,7 +45,7 @@ def actions(board):
             if board[i][j] == EMPTY:
                 possibleAction = (i, j)
                 actions.add(possibleAction)
-    return(actions)
+    return (actions)
 
 
 def result(board, action):
@@ -71,7 +71,7 @@ def winner(board):
     O = "O"
     EMPTY = None
     """
-    transposedBoard = list(map(list, (zip(*board))))
+    transposedBoard = list(map(list,( zip(*board))))
     diagonalBoard = [[board[0][0], board[1][1], board[2][2]],
                      [board[0][2], board[1][1], board[2][0]]]
     joinnedBoard = board + transposedBoard + diagonalBoard
@@ -137,7 +137,9 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    if player(board) == X:
+    if terminal(board):
+        return None
+    elif player(board) == X:
         return (maxValue(board, -100, 100)[1])
     elif player(board) == O:
         return (minValue(board, -100, 100)[1])
@@ -167,7 +169,7 @@ def minValue(board, alpha, beta):
         best = 100
         bestAction = ()
         for action in actions(board):
-            newValue = min(best,maxValue(result(board, action), alpha, beta)[0])
+            newValue = min(best, maxValue(result(board, action), alpha, beta)[0])
             if newValue < best:
                 bestAction = action
             best = min(best, newValue)
