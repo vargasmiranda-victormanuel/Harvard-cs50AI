@@ -1,0 +1,1 @@
+cd c:\Users\Vargas\Documents\GitHub\Harvard-cs50AI\Lectures\02-Uncertainty\hmm ; c:\Users\Vargas\Documents\GitHub\Harvard-cs50AI\.venv38\Scripts\python.exe sequence.py
